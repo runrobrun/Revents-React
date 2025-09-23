@@ -2,10 +2,12 @@ import {EventAttendees} from './EventAttendees.tsx';
 import type {AppEvent} from '../../../lib/types';
 
 type Props = {
-    event: AppEvent
+    event: AppEvent,
+    formToggle: (event: AppEvent) => void,
+    deleteEvent: (eventId: string) => void
 }
 
-export function EventCard({event}: Props) {
+export function EventCard({event, formToggle, deleteEvent}: Props) {
     const host = event.attendees.find(x => x.id === event.hostUid );
 
     return (
@@ -27,9 +29,12 @@ export function EventCard({event}: Props) {
                 </div>
                 <div className="card-actions flex">
                     <div className="flex flex-1">
-                        Description
+                        {event.description}
                     </div>
-                    <button className="btn btn-primary">View</button>
+                    <div className="flex gap-3">
+                        <button onClick={() => deleteEvent(event.id)} className="btn btn-error">Delete</button>
+                        <button onClick={() => formToggle(event)} className="btn btn-primary">View</button>
+                    </div>
                 </div>
             </div>
         </div>
